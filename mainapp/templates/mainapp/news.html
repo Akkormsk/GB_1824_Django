@@ -9,7 +9,8 @@
     <div class="card my-2">
       <div class="card-body">
         <h5 class="card-title">Заголовок для текста со ссылкой</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Текст со <a href="/mainapp/?text=ссылка">ссылкой</a> пока так и не получилось ((</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{% now 'Y-m-d H:i' %}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Текст со <a href="/mainapp/news/1/?q=ссылка">ссылкой</a></h6>
         <p class="card-text">{{news_item.text}}</p>
         <a href="#" class="card-link">Подробнее</a>
       </div>

@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
+from django.conf import settings
 from django.views.generic import TemplateView
 from datetime import datetime
 import json
+from django.http import HttpResponseRedirect
 
 
 class ContactsView(TemplateView):
@@ -64,7 +63,7 @@ class NewsView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['object_list'] = []
-        with open('json_news.json', encoding='utf-8') as f:
+        with open(settings.BASE_DIR / 'json_news.json', encoding='utf-8') as f:
             file_content = f.read()
             news_dict = json.loads(file_content)
         start = 5 * (kwargs["n"] - 1)
@@ -80,7 +79,8 @@ class NewsView(TemplateView):
         context_data['next'] = kwargs["n"] + 1
         return context_data
 
-
-# def goya(request):
-#     st = request.GET["text"]
-#     return redirect(f'https://yandex.ru/search/?text={st}&lr=213')
+    def get(self, *args, **kwargs):
+        st = self.request.GET.get('q', None)
+        if st:
+            return HttpResponseRedirect(f'https://yandex.ru/search/?text={st}&lr=213')
+        return super().get(*args, **kwargs)
