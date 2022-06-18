@@ -1,8 +1,9 @@
 from django.conf import settings
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from datetime import datetime
 import json
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, Http404
 
 
 class ContactsView(TemplateView):
@@ -80,7 +81,18 @@ class NewsView(TemplateView):
         return context_data
 
     def get(self, *args, **kwargs):
+        print(self.request.GET)
         st = self.request.GET.get('q', None)
         if st:
             return HttpResponseRedirect(f'https://yandex.ru/search/?text={st}&lr=213')
         return super().get(*args, **kwargs)
+
+
+def PageNotFound(request, exception):
+    return HttpResponseNotFound('Sorry, страница не найдена')
+
+
+def test(request, n):
+    if int(n) > 3:
+        return redirect('mainapp:test')
+    return HttpResponse(f'Test page {n}')
