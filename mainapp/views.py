@@ -5,6 +5,8 @@ from datetime import datetime
 import json
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, Http404
 
+from mainapp.models import News
+
 
 class ContactsView(TemplateView):
     template_name = "mainapp/contacts.html"
@@ -64,18 +66,19 @@ class NewsView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['object_list'] = []
-        with open(settings.BASE_DIR / 'json_news.json', encoding='utf-8') as f:
-            file_content = f.read()
-            news_dict = json.loads(file_content)
-        start = 5 * (kwargs["n"] - 1)
-        stop = start + 5
-        for i in range(start, stop):
-            title, text = list(news_dict.items())[i]
-            context_data['object_list'].append({
-                'title': title,
-                'text': text,
-                'date': datetime.now()
-            })
+        # with open(settings.BASE_DIR / 'json_news.json', encoding='utf-8') as f:
+        #     file_content = f.read()
+        #     news_dict = json.loads(file_content)
+        context_data['object_list'] = News.objects.all()
+        # start = 5 * (kwargs["n"] - 1)
+        # stop = start + 5
+        # for i in range(start, stop):
+        #     title, text = list(news_dict.items())[i]
+        #     context_data['object_list'].append({
+        #         'title': title,
+        #         'text': text,
+        #         'date': datetime.now()
+        #     })
         context_data['prev'] = kwargs["n"] - 1
         context_data['next'] = kwargs["n"] + 1
         return context_data
