@@ -2,8 +2,8 @@ from django.db import models
 
 
 class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
     deleted = models.BooleanField(default=False, verbose_name="Удален")
 
     def delete(self, *args, **kwargs):
@@ -12,7 +12,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ('-created_at',)
+        ordering = ('-created',)
 
 
 class NewsManager(models.Manager):
@@ -26,7 +26,7 @@ class NewsManager(models.Manager):
 class News(BaseModel):
     objects = NewsManager()
     title = models.CharField(max_length=255, verbose_name='Заголовок')
-    preamble = models.CharField(max_length=1000, verbose_name='Превью')
+    preambule = models.CharField(max_length=1000, verbose_name='Превью')
     body = models.TextField(verbose_name="Содержимое")
     body_as_markdown = models.BooleanField(default=False, verbose_name="Способ разметки")
 
@@ -39,8 +39,8 @@ class News(BaseModel):
 
 
 class Courses(BaseModel):
-    title = models.CharField(max_length=255, verbose_name='Название')
-    preamble = models.CharField(max_length=1000, verbose_name='Краткое описание')
+    name = models.CharField(max_length=255, verbose_name='Название')
+    description = models.CharField(max_length=1000, verbose_name='Краткое описание')
     body = models.TextField(verbose_name="Содержимое")
 
 
