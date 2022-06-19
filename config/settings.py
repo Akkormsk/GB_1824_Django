@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mainapp.apps.MainappConfig'
+    'mainapp.apps.MainappConfig',
+    'seeding',
+    'django_seed',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,4 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SEEDING_DIR = "mainapp/seeding/"
