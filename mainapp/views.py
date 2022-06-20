@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
+from django.conf import settings
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from datetime import datetime
 import json
+from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, Http404
+
+from mainapp.models import News
 
 
 class ContactsView(TemplateView):
@@ -64,23 +66,36 @@ class NewsView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['object_list'] = []
-        with open('json_news.json', encoding='utf-8') as f:
-            file_content = f.read()
-            news_dict = json.loads(file_content)
-        start = 5 * (kwargs["n"] - 1)
-        stop = start + 5
-        for i in range(start, stop):
-            title, text = list(news_dict.items())[i]
-            context_data['object_list'].append({
-                'title': title,
-                'text': text,
-                'date': datetime.now()
-            })
+        # with open(settings.BASE_DIR / 'json_news.json', encoding='utf-8') as f:
+        #     file_content = f.read()
+        #     news_dict = json.loads(file_content)
+        context_data['object_list'] = News.objects.all()
+        # start = 5 * (kwargs["n"] - 1)
+        # stop = start + 5
+        # for i in range(start, stop):
+        #     title, text = list(news_dict.items())[i]
+        #     context_data['object_list'].append({
+        #         'title': title,
+        #         'text': text,
+        #         'date': datetime.now()
+        #     })
         context_data['prev'] = kwargs["n"] - 1
         context_data['next'] = kwargs["n"] + 1
         return context_data
 
+    def get(self, *args, **kwargs):
+        print(self.request.GET)
+        st = self.request.GET.get('q', None)
+        if st:
+            return HttpResponseRedirect(f'https://yandex.ru/search/?text={st}&lr=213')
+        return super().get(*args, **kwargs)
 
-# def goya(request):
-#     st = request.GET["text"]
-#     return redirect(f'https://yandex.ru/search/?text={st}&lr=213')
+
+def PageNotFound(request, exception):
+    return HttpResponseNotFound('Sorry, страница не найдена')
+
+
+def test(request, n):
+    if int(n) > 3:
+        return redirect('mainapp:test')
+    return HttpResponse(f'Test page {n}')
