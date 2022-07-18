@@ -11,8 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os.path
 from pathlib import Path
+import django
+
+django.setup()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# import django.contrib.auth.backends
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -31,11 +36,14 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp.apps.MainappConfig',
+    'authapp.apps.AuthappConfig',
+    'social_django',
     'seeding',
     'django_seed',
 ]
@@ -63,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -80,7 +90,7 @@ DATABASES = {
     },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djdb',
+        'NAME': 'djdb_2',
         'USER': 'root',
         'PASSWORD': '1234',
         # 'HOST': '127.0.0.1',
@@ -134,3 +144,21 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SEEDING_DIR = "mainapp/seeding/"
+
+# AUTH_USER_MODEL = 'authapp.User'
+LOGIN_REDIRECT_URL = 'mainapp:index'
+LOGOUT_REDIRECT_URL = 'mainapp:index'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = '1641b6ceb0d046948a4a'
+SOCIAL_AUTH_GITHUB_SECRET = '0c0af0d53f92677a8a462a7c19be233aff137b7b'
+SOCIAL_AUTH_VK_OAUTH2_KEY = '8221534'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'CsDh7A82T0b8YZOx1uNE'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
