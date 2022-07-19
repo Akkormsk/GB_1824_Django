@@ -5,10 +5,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import TemplateView
 
-import django
-
-django.setup()
-
 from authapp.models import User
 
 

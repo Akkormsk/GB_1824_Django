@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os.path
 from pathlib import Path
-import django
 
-django.setup()
+# import django
+# django.setup()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # import django.contrib.auth.backends
@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'mainapp.apps.MainappConfig',
     'authapp.apps.AuthappConfig',
-    'social_django',
-    'seeding',
+    # 'seeding',
     'django_seed',
 ]
 
@@ -145,7 +145,7 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SEEDING_DIR = "mainapp/seeding/"
 
-# AUTH_USER_MODEL = 'authapp.User'
+AUTH_USER_MODEL = 'authapp.User'
 LOGIN_REDIRECT_URL = 'mainapp:index'
 LOGOUT_REDIRECT_URL = 'mainapp:index'
 
@@ -161,4 +161,6 @@ SOCIAL_AUTH_GITHUB_KEY = '1641b6ceb0d046948a4a'
 SOCIAL_AUTH_GITHUB_SECRET = '0c0af0d53f92677a8a462a7c19be233aff137b7b'
 SOCIAL_AUTH_VK_OAUTH2_KEY = '8221534'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'CsDh7A82T0b8YZOx1uNE'
-SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['mail']
+
+SITE_ID = 1

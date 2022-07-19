@@ -25,9 +25,9 @@ from mainapp.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url="mainapp/")),
-    path("mainapp/", include("mainapp.urls", namespace='mainapp')),
-    path("authapp/", include("authapp.urls", namespace='authapp')),
-    path('social_django/', include('social_django.urls', namespace='social')),
+    path('mainapp/', include("mainapp.urls", namespace='mainapp')),
+    path('authapp/', include('authapp.urls', namespace='authapp')),
+    path('social_auth/', include('social_django.urls', namespace='social')),
 ]
 
 # if settings.DEBUG:
