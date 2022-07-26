@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'social_django',
     'mainapp.apps.MainappConfig',
     'authapp.apps.AuthappConfig',
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -164,3 +165,5 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = 'CsDh7A82T0b8YZOx1uNE'
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['mail']
 
 SITE_ID = 1
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
