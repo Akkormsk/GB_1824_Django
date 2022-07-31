@@ -54,7 +54,7 @@ class Lessons(BaseModel):
     title = models.CharField(max_length=255, verbose_name='Название')
     preamble = models.CharField(max_length=1000, verbose_name='Краткое описание')
     body = models.TextField(verbose_name="Содержимое")
-    length = models.DecimalField(max_digits=4, decimal_places=2, verbose_name='Продолжительность мин', default='1')
+    length = models.DecimalField(max_digits=4, decimal_places=1, verbose_name='Продолжительность мин', default='1')
 
     class Meta:
         verbose_name = "урок"
