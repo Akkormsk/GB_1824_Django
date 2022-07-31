@@ -7,11 +7,25 @@ app_name = MainappConfig.name
 
 urlpatterns = [
     path('contacts/', views.ContactsView.as_view(), name="contacts"),
-    path('courses/', views.CoursesView.as_view(), name="courses"),
+
+    #Courses
+    path('courses/', views.CoursesListView.as_view(), name='courses'),
+    path('courses/add/', views.CoursesCreateView.as_view(), name='courses_create'),
+    path('courses/<int:pk>/update/', views.CoursesUpdateView.as_view(), name='courses_update'),
+    path('courses/<int:pk>/detail/', views.CoursesDetailView.as_view(), name='courses_detail'),
+    path('courses/<int:pk>/delete/', views.CoursesDeleteView.as_view(), name='courses_delete'),
+    path("course_feedback/", views.CourseFeedbackFormProcessView.as_view(), name='course_feedback'),
+
+
     path('docsite/', views.DocSiteView.as_view(), name="docsite"),
     path('', views.IndexView.as_view(), name="index"),
-    path('login/', views.LoginView.as_view(), name="login"),
-    path('news/', RedirectView.as_view(url="/mainapp/news/1/"), name="news"),
-    path('news/<int:n>/', views.NewsView.as_view()),
+    path('login/', RedirectView.as_view(url="authapp/login")),
+
+    #News
+    path('news/', views.NewsListView.as_view(), name='news'),
+    path('news/add/', views.NewsCreateView.as_view(), name='news_create'),
+    path('news/<int:pk>/update/', views.NewsUpdateView.as_view(), name='news_update'),
+    path('news/<int:pk>/detail/', views.NewsDetailView.as_view(), name='news_detail'),
+    path('news/<int:pk>/delete/', views.NewsDeleteView.as_view(), name='news_delete'),
 ]
 
