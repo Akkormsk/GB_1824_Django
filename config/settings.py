@@ -15,8 +15,6 @@ from pathlib import Path
 # import django
 # django.setup()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-# import django.contrib.auth.backends
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,7 +27,9 @@ SECRET_KEY = 'django-insecure-ox^jzwvpna*0x^paex=!6%%fys-t-5l(907^j5otiej3=@c8=4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
+if DEBUG:
+    INTERNAL_IPS = ["127.0.0.1"]
 
 # Application definition
 
@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'crispy_forms',
+    'debug_toolbar',
     'social_django',
     'mainapp.apps.MainappConfig',
     'authapp.apps.AuthappConfig',
-    # 'seeding',
     'django_seed',
 ]
 
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -167,3 +169,61 @@ SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['mail']
 SITE_ID = 1
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOG_FILE = BASE_DIR / "var" / "log" / "main_log.log"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "[%(asctime)s] %(levelname)s %(name)s (%(lineno)d) %(message)s"
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": LOG_FILE,
+            "formatter": "console",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "console"
+        },
+    },
+    "loggers": {
+        "django": {"level": "INFO", "handlers": ["file", "console"]},
+    },
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
+
+# Read about sending email:
+# https://docs.djangoproject.com/en/3.2/topics/email/
+# Full list of email settings:
+# https://docs.djangoproject.com/en/3.2/ref/settings/#email
+# EMAIL_HOST = "localhost"
+# EMAIL_PORT = "25"
+# For debugging: python -m smtpd -n -c DebuggingServer localhost:25
+# EMAIL_HOST_USER = "django@geekshop.local"
+# EMAIL_HOST_PASSWORD = "geekshop"
+# EMAIL_USE_SSL = False
+# If server support TLS:
+# EMAIL_USE_TLS = True
+# Email as files for debug
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "var" / "email"
