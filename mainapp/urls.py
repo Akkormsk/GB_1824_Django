@@ -11,7 +11,8 @@ urlpatterns = [
     path('contacts/', views.ContactsView.as_view(), name="contacts"),
 
     #Courses
-    path('courses/', cache_page(300)(views.CoursesListView.as_view()), name='courses',),
+    # path('courses/', cache_page(300)(views.CoursesListView.as_view()), name='courses',),
+    path('courses/', (views.CoursesListView.as_view()), name='courses',),
     path('courses/add/', views.CoursesCreateView.as_view(), name='courses_create'),
     path('courses/<int:pk>/update/', views.CoursesUpdateView.as_view(), name='courses_update'),
     path('courses/<int:pk>/detail/', views.CoursesDetailView.as_view(), name='courses_detail'),

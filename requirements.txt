@@ -25,6 +25,8 @@ django-seed==0.3.1
 django-seeding-data==0.1.1
 executing==0.8.3
 Faker==13.13.0
+gevent==21.12.0
+greenlet==1.1.2
 idna==3.3
 ipython==8.4.0
 jedi==0.18.1
@@ -44,6 +46,7 @@ Pygments==2.12.0
 PyJWT==2.4.0
 pyparsing==3.0.9
 python-dateutil==2.8.2
+python-gettext==4.0
 python3-openid==3.2.0
 pytz==2022.1
 redis==4.3.4
@@ -61,3 +64,5 @@ urllib3==1.26.10
 vine==5.0.0
 wcwidth==0.2.5
 wrapt==1.14.1
+zope.event==4.5.0
+zope.interface==5.4.0

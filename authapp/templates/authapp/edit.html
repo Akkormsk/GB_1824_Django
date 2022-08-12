@@ -1,64 +1,13 @@
 {% extends 'mainapp/base.html' %}
 {% block content %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags i18n %}
 
 <form class="col-6 m-auto pt-5 pb-5" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
-<!--    <p>-->
-<!--        <input type="text" name="username" autofocus=""-->
-<!--               value="{{ user.username }}"-->
-<!--               autocapitalize="none" autocomplete="username"-->
-<!--               maxlength="150" class="textinput textInput form-control"-->
-<!--               required="" id="id_username" placeholder="Username">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <input type="text" name="email" autofocus=""-->
-<!--               value="{{ user.email }}"-->
-<!--               autocapitalize="none" autocomplete="email"-->
-<!--               maxlength="150" class="textinput textInput form-control"-->
-<!--               required="" id="id_email" placeholder="e-mail">-->
-<!--    </p>-->
-
-<!--    <p>-->
-<!--        <input type="text" name="first_name" autocapitalize="none"-->
-<!--               value="{{ user.first_name }}"-->
-<!--               maxlength="150" class="textinput textInput form-control"-->
-<!--               required="" placeholder="First name">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <input type="text" name="last_name" autocapitalize="none"-->
-<!--               value="{{ user.last_name }}"-->
-<!--               maxlength="150" class="textinput textInput form-control"-->
-<!--               required="" placeholder="Last name">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <input type="number" name="age" autocapitalize="none"-->
-<!--               value="{{ user.age }}"-->
-<!--               class="textinput textInput form-control"-->
-<!--               required="" placeholder="Age">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <input type="file" name="avatar" autocapitalize="none"-->
-<!--               value="{{ user.avatar }}"-->
-<!--               class="textinput textInput form-control"-->
-<!--               placeholder="Avatar">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <input type="password" name="password1"-->
-<!--               autocomplete="current-password"-->
-<!--               class="textinput textInput form-control" required=""-->
-<!--               id="id_password1" placeholder="New assword">-->
-<!--    </p>-->
-<!--    <p>-->
-<!--        <input type="password" name="password2"-->
-<!--               autocomplete="current-password"-->
-<!--               class="textinput textInput form-control" required=""-->
-<!--               id="id_password2" placeholder="New password confirm">-->
-<!--    </p>-->
     <p>
         <button type="submit"
-                class="btn btn-primary btn-block">Сохранить изменения
+                class="btn btn-primary btn-block">{% translate 'save' %}
         </button>
     </p>
 </form>

@@ -8,10 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def send_feedback_mail(user_id: int, message: str) -> None:
+def send_feedback_mail(message: str) -> None:
     logger.info(f"Send message: '{message}'")
-    user_model = get_user_model()
-    user_obj = user_model.objects.get(pk=user_id)
+    # user_model = get_user_model()
+    # user_obj = user_model.objects.get(pk=user_id)
     send_mail(
         'TechSupport Help',
         message,

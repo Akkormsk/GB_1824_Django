@@ -62,7 +62,8 @@ class ContactsView(TemplateView):
                     timeout=60,
                 )
                 messages.add_message(self.request, messages.INFO, _("Message sent"))
-                tasks.send_feedback_mail.delay(self.request.POST.get("user_id"), self.request.POST.get("message"))
+                # tasks.send_feedback_mail.delay(self.request.POST.get("user_id"), self.request.POST.get("message"))
+                tasks.send_feedback_mail.delay(self.request.POST.get("message"))
             else:
                 messages.add_message(
                     self.request,
@@ -72,21 +73,15 @@ class ContactsView(TemplateView):
         return HttpResponseRedirect(reverse_lazy("mainapp:contacts"))
 
 
-class BaseListView(ListView):
-    paginate_by = 5
-
+class CoursesListView(ListView):
+    paginate_by = 4
+    model = Courses
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
 
 
-class CoursesListView(BaseListView):
-    model = Courses
-
-
 class CoursesDetailView(DetailView):
     model = Courses
-
-    # template_name = "mainapp/courses_detail.html"
 
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
@@ -100,13 +95,18 @@ class CoursesDetailView(DetailView):
         cached_feedback_list = cache.get(feedback_list_key)
         if cached_feedback_list is None:
             context["feedback_list"] = CourseFeedback.objects.filter(course=context["course_object"]).select_related()
-            cache.set(feedback_list_key, context["feedback_list"], timeout=300)
+            cache.set(feedback_list_key, context["feedback_list"], timeout=3)
+            import pickle
+            with open(f"mainapp/fixtures/006_feedback_list_{context['course_object'].pk}.bin", "wb") as outf:
+                pickle.dump(context["feedback_list"], outf)
         else:
             context["feedback_list"] = cached_feedback_list
-
         if self.request.user.is_authenticated:
             if not CourseFeedback.objects.filter(course=context["course_object"], user=self.request.user).count():
                 context["feedback_form"] = CourseFeedbackForm(course=context["course_object"], user=self.request.user)
+        # from django.core.paginator import Paginator
+        # paginator = Paginator(context["feedback_list"], 2)
+        # paginator.page(1)
         return context
 
 
@@ -157,7 +157,8 @@ class LoginView(TemplateView):
     template_name = "mainapp/login.html"
 
 
-class NewsListView(BaseListView):
+class NewsListView(ListView):
+    paginate_by = 3
     model = News
 
 

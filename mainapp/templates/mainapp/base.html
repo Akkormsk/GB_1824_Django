@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 <!doctype html>
 <html lang="ru">
@@ -45,9 +45,9 @@
             </p>
             <p>
             <ul class="list-unstyled">
-                <li><a href=mainapp/>Домашняя</a></li>
-                <li><a href=/mainapp/news/>Новости</a></li>
-                <li><a href=/mainapp/login/>Войти</a></li>
+                <li><a href=mainapp/>{% translate 'Home' %}</a></li>
+                <li><a href=/mainapp/news/>{% translate 'News' %}</a></li>
+                <li><a href=/mainapp/login/>{% translate 'Login' %}</a></li>
             </ul>
             </p>
         </div>
