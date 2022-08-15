@@ -34,8 +34,9 @@ class EditView(UserPassesTestMixin, UpdateView):
     def test_func(self):
         return True if self.request.user.pk == self.kwargs.get("pk") else False
 
-    # def get_object(self, queryset=None):
-    #     return self.request.user
+    def get_object(self, queryset=None):
+        return self.request.user
 
     def get_success_url(self):
         return reverse_lazy('authapp:edit', args=[self.request.user.pk])
+

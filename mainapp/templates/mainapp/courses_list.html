@@ -16,134 +16,43 @@
 <div class="row justify-content-center mt-3">
 
     {% for item in object_list %}
-        <div class="card col-sm-12 col-md-6 col-lg-4">
-            <div class="card-body">
-                <h5 class="card-title">{{ item.pk }}. {{ item.title }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                    {{ item.created|date:"Y-m-d h-i-s" }}
-                </h6>
-                <p class="card-text">{{ item.preambule }}</p>
-                <div class="row">
-                    <div class="col">
-                        <a href="{% url 'mainapp:courses_detail' pk=item.pk %}"
-                           class="card-link">Подробнее</a>
-                    </div>
-                    {% if perms.mainapp.change_courses %}
-                    <div class="col-1 text-center">
-                        <a href="{% url 'mainapp:courses_update' pk=item.pk %}">
-                            <i class="far fa-edit"></i>
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% if perms.mainapp.delete_courses %}
-                    <div class="col-1 text-center">
-                        <a href="{% url 'mainapp:courses_delete' pk=item.pk %}">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
-                    </div>
-                    {% endif %}
+    <div class="card col-sm-12 col-md-6 col-lg-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.pk }}. {{ item.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                {{ item.created|date:"Y-m-d h-i-s" }}
+            </h6>
+            <p class="card-text">{{ item.preambule }}</p>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'mainapp:courses_detail' pk=item.pk %}"
+                       class="card-link">Подробнее</a>
                 </div>
+                {% if perms.mainapp.change_courses %}
+                <div class="col-1 text-center">
+                    <a href="{% url 'mainapp:courses_update' pk=item.pk %}">
+                        <i class="far fa-edit"></i>
+                    </a>
+                </div>
+                {% endif %}
+                {% if perms.mainapp.delete_courses %}
+                <div class="col-1 text-center">
+                    <a href="{% url 'mainapp:courses_delete' pk=item.pk %}">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course001.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">Web Python</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course002.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">Web Golang</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course003.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">Web JavaScript</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course004.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">Web Java</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course005.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">Web PHP</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course006.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">Python AI</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
-<!--    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">-->
-<!--        <a href="#">-->
-<!--            <img src="/static/img/course007.jpg" class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title text-center">DevOps</h5>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </div>-->
-
-
+    </div>
+    {% endfor %}
 </div>
-
-<div class="row justify-content-center align-items-center mt-3 mb-n3">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="?page=1">Первая</a>
-            </li>
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
-            </li>
-            {% endif %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.number }}">Текущая - {{ page_obj.number }}</a>
-            </li>
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
-            </li>
-            {% endif %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
+{% include 'mainapp/includes/paginator.html' %}
 {% endblock %}
+
+
+
+
+
+
+

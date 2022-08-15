@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 <!doctype html>
 <html lang="ru">
@@ -22,11 +22,13 @@
 
 <body>
 
-
+{% include 'authapp/includes/inc_messages.html' %}
 {% include 'mainapp/includes/inc_main_menu.html' %}
 
 
 <div class="container-md">
+    {% block title %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
 </div>
@@ -43,9 +45,9 @@
             </p>
             <p>
             <ul class="list-unstyled">
-                <li><a href=mainapp/>Домашняя</a></li>
-                <li><a href=/mainapp/news/>Новости</a></li>
-                <li><a href=/mainapp/login/>Войти</a></li>
+                <li><a href=mainapp/>{% translate 'Home' %}</a></li>
+                <li><a href=/mainapp/news/>{% translate 'News' %}</a></li>
+                <li><a href=/mainapp/login/>{% translate 'Login' %}</a></li>
             </ul>
             </p>
         </div>
